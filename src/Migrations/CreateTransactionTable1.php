@@ -21,7 +21,7 @@ use Plenty\Modules\Plugin\DataBase\Contracts\Migrate;
 /**
  * Class CreateTransactionTable
  */
-class CreateTransactionTable
+class CreateTransactionTable1
 {
     /**
      * Create transaction log table
@@ -30,7 +30,7 @@ class CreateTransactionTable
      */
     public function run(Migrate $migrate)
     {
-        $migrate->createTable(TransactionLog::class);
+        $migrate->updateTable(TransactionLog::class);
         //$migrate->createTable(Oneclick::class);
     }
 }
