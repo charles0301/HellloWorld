@@ -29,11 +29,12 @@
 						<div class="row">
 				
 		<div class="col-xs-12 col-sm-12">
-			{% if (oneclick is not empty) and (saveddetails is not empty) %}
+			{% if iban is not empty %}
 			<h5>
 				<a id="nn_toggle_form" style="cursor:pointer">Old Account Details </a>
 			    </h5>
-			     <input type="hidden" id="one_click_shopping" name="one_click_shopping" value="1">
+	     		{% endif %}
+	    <input type="hidden" id="one_click_shopping" name="one_click_shopping" value="1">
             <input type="hidden" id="form_error" value="">
             <input type="hidden" id="nn_account_display_text_saved" value="">
             <input type="hidden" id="nn_account_display_text_new" value="">
@@ -62,8 +63,6 @@
 			<label for="nn_sepa_iban">{{trans("Novalnet::PaymentMethod.sepa_iban_label")}}*</label>
 		</div>  
          -->
-	
-			{% else %}
 		<div id="nn_new_card_details" class="input-unit" style="display:{{display_field}};">
 			<div >
 				<input class="input-unit" type="text" name="nn_sepa_cardholder" value="{{endcustomername}}" id="nn_sepa_cardholder"> 
@@ -95,11 +94,8 @@
 										<input type="date" name="nn_sepa_birthday" id="nn_sepa_birthday">
 										<label for="nn_sepa_birthday">{{trans("Novalnet::PaymentMethod.birthdate_label")}}</label>
 									</div>
-								{% endif %}
-								
-								
+								{% endif %}	
 							</div>
-							{% endif %}
 						</div> 
 					</div>
 				</div>			
