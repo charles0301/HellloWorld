@@ -30,7 +30,7 @@ class CreateTransactionTable
      */
     public function run(Migrate $migrate)
     {
-        $migrate->updateTable(TransactionLog::class);
-        //$migrate->updateTable(Oneclick::class);
+        $migrate->createTable(TransactionLog::class);
+        //$migrate->createTable(Oneclick::class);
     }
 }
