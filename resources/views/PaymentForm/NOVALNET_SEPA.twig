@@ -40,17 +40,17 @@
             <input type="hidden" id="nn_account_display_text_new" value="">
             
 	<div id="nn_saved_details" class="row" style="display:{{ref_display_field}};">
-		<div class="col-sm-6">
-			<p>{{trans("Novalnet::PaymentMethod.sepa_account_holder_label")}}</p>	
+		<div class="col-xs-12 col-sm-12">
+	           <div class="input-unit">
+			<input type="text" name="nn_sepa_cardholder_ref" value="{{endcustomername}}" id="nn_sepa_cardholder_ref" readonly=true> 
+			<label for="sepa_holder">{{trans("Novalnet::PaymentMethod.sepa_account_holder_label")}}*</label>
+		   </div>
 		</div>
-		<div class="col-sm-6">
-			<p>{{endcustomername}}" </p> 
-		</div>
-		<div class="col-sm-6">
-			<p>{{trans("Novalnet::PaymentMethod.sepa_iban_label")}}</p>		
-		</div>
-		<div class="col-sm-6">
-			<p>{{iban}}</p>
+		<div class="col-xs-12 col-sm-12">
+	           <div class="input-unit">
+			<input type="text" name="nn_sepa_iban_ref" value="{{iban}}" id="nn_sepa_iban_ref" readonly=true> 
+			<label for="nn_sepa_iban">{{trans("Novalnet::PaymentMethod.sepa_iban_label")}}*</label>
+		   </div>
 		</div>
 	</div>		
 	<!--	
