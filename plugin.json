@@ -32,7 +32,7 @@
     "Novalnet\\Migrations\\CreatePaymentMethod_2_0_5",
     "Novalnet\\Migrations\\CreatePaymentMethod_2_0_6",
     "Novalnet\\Migrations\\CreatePaymentMethod_2_0_7",
-    "Novalnet\\Migrations\\CreateTransactionTable"
+    "Novalnet\\Migrations\\CreateTransactionTable1"
   ],
   "dataProviders": [
     {
