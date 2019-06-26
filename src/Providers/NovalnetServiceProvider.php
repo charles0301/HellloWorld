@@ -283,7 +283,7 @@ class NovalnetServiceProvider extends ServiceProvider
                                                                     'paymentMopKey'     =>  $paymentKey,
 									'paymentName' => $paymentName,	
 									'iban' => $log[0]->additionalInfo,
-									'saveddetails' => '1',
+									'tid' => $log[0]->tid,
 								 'oneclick' => $one_click,
 								'endcustomername'=> empty(trim($endUserName)) ? $endCustomerName : $endUserName,
                                                                     'nnGuaranteeStatus' =>  empty($address->companyName) ? $guaranteeStatus : ''
