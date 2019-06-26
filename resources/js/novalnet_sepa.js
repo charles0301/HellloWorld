@@ -36,7 +36,16 @@ jQuery(document).ready( function() {
 	}
 	
 	$('#nn_toggle_form').on('click',function(){
-		$('#nn_saved_details, #nn_new_card_details').fadeToggle();
+		$('#nn_new_card_details').css('display') == 'none'){
+			$('#nn_sepa_new_details').val('1');
+			$('#nn_toggle_form').html('<b><u> ' + 'Old Card Details' + '</u></b>');
+			$('#nn_saved_details').toggle('slow');
+		}else{
+			$('#nn_sepa_new_details').val('0');
+			$('#nn_toggle_form').html('<b><u> ' + 'New Card Details' + '</u></b>');
+			$('#nn_new_card_details').toggle('slow');
+		}
+			
 	});
 	
   
