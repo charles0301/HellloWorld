@@ -65,15 +65,19 @@
 		</div>  
          -->
 		<div id="nn_new_card_details" class="row" style="display:{{display_field}};">
-			<div class="col-xs-12 col-sm-12 input-unit">
+			<div class="col-xs-12 col-sm-12">
+			  <div class="input-unit">
 				<input class="input-unit" type="text" name="nn_sepa_cardholder" value="{{endcustomername}}" id="nn_sepa_cardholder"> 
 				<label for="sepa_holder">{{trans("Novalnet::PaymentMethod.sepa_account_holder_label")}}*</label>
+			  </div>
 			</div>
-			<div class="col-xs-12 col-sm-12 input-unit">
+			<div class="col-xs-12 col-sm-12">
+			  <div class="input-unit">
 				<input type="text" class="input-unit" name="nn_sepa_iban" autocomplete="off" id="nn_sepa_iban">
 				<label for="nn_sepa_iban">{{trans("Novalnet::PaymentMethod.sepa_iban_label")}}*</label>
+			  </div>
 			</div>
-       </div>
+       		</div>
 								{% if oneclick == "1" %}
 								<div>
 	             <input type="checkbox" id="savepayment" value=""> Save Payment Data
