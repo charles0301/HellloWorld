@@ -219,8 +219,8 @@ class NovalnetServiceProvider extends ServiceProvider
 			    $account = pluginApp(AccountService::class);
         		    $customerId = $account->getAccountContactId();
 			    if (!empty ($customerId)) {
-			    //~ $log = $transactionLogData->getTransactionData('customerId', $customerId);
-				    //~ $this->getLogger(__METHOD__)->error('log', $log);
+			    $log = $transactionLogData->getTransactionData('customerId', $customerId);
+				   $this->getLogger(__METHOD__)->error('log', $log);
 			    }
 			    			foreach ($address->options as $option) {
 							if ($option->typeId == 12) {
@@ -282,7 +282,7 @@ class NovalnetServiceProvider extends ServiceProvider
                                                                     'nnPaymentProcessUrl' => $paymentProcessUrl,
                                                                     'paymentMopKey'     =>  $paymentKey,
 									'paymentName' => $paymentName,	
-									//~ 'iban' => $log[0]->additionalInfo,
+									'iban' => $log[0]->additionalInfo,
 									'saveddetails' => '1',
 								 'oneclick' => $one_click,
 								'endcustomername'=> empty(trim($endUserName)) ? $endCustomerName : $endUserName,
