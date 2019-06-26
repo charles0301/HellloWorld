@@ -1,7 +1,9 @@
 <script src="{{ plugin_path('Novalnet') }}/js/novalnet_sepa.js"></script>
-{% set display_field = 'none' %}
-{% if iban is empty %}
 {% set display_field = 'block' %}
+{% set ref_display_field = 'none' %}
+{% if iban is not empty %}
+{% set display_field = 'none' %}
+{% set ref_display_field = 'block' %}
 {% endif %}
 <form method="post" id="nn_sepa_form" name="nn_sepa_form" action="{{nnPaymentProcessUrl}}">
 	<input type="hidden" id="paymentKey" name="paymentKey" value="{{paymentMopKey}}" />
@@ -37,7 +39,7 @@
             <input type="hidden" id="nn_account_display_text_new" value="">
 			    
 			
-	<div id="nn_saved_details" class="row" style="display:{{display_field}};">
+	<div id="nn_saved_details" class="row" style="display:{{ref_display_field}};">
 		<div class="col-sm-6">
 			<p>{{trans("Novalnet::PaymentMethod.sepa_account_holder_label")}}</p>	
 		</div>
