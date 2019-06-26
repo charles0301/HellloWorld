@@ -29,7 +29,7 @@
 						<div class="row">
 				
 		<div class="col-xs-12 col-sm-12">
-			{% if iban is not empty %}
+			{% if oneclick is not empty %}
 			<h5>
 				<a id="nn_toggle_form" style="cursor:pointer">New Account Details </a>
 			    </h5>
@@ -54,7 +54,8 @@
 			<p>{{iban}}</p>
 		</div>
 	</div>		
-	<!--	<div>
+	<!--	
+		<div>
 			<input type="text" name="nn_sepa_cardholder" value="{{endcustomername}}" id="nn_sepa_cardholder"> 
 			<label for="sepa_holder">{{trans("Novalnet::PaymentMethod.sepa_account_holder_label")}}*</label>
 		</div>
@@ -69,14 +70,13 @@
 				<label for="sepa_holder">{{trans("Novalnet::PaymentMethod.sepa_account_holder_label")}}*</label>
 			</div>
 			<div >
-	<input type="text" class="input-unit" name="nn_sepa_iban" autocomplete="off" id="nn_sepa_iban">
+				<input type="text" class="input-unit" name="nn_sepa_iban" autocomplete="off" id="nn_sepa_iban">
 				<label for="nn_sepa_iban">{{trans("Novalnet::PaymentMethod.sepa_iban_label")}}*</label>
 			</div>
        </div>
 								{% if oneclick == "1" %}
 								<div>
-	<input type="checkbox" id="savepayment" value=""> Save Payment Data
-	<input type="text" id="save_payment" name="save_payment" value="">
+	             <input type="checkbox" id="savepayment" value=""> Save Payment Data
 	</div>	
 	{% endif %}
 								<a href="#iban_details" data-toggle="collapse">{{trans("Novalnet::PaymentMethod.ibanMandate")}}</a>
