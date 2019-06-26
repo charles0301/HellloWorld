@@ -1,6 +1,6 @@
 <script src="{{ plugin_path('Novalnet') }}/js/novalnet_sepa.js"></script>
 {% set display_field = 'none' %}
-{% if saveddetails is empty %}
+{% if iban is empty %}
 {% set display_field = 'block' %}
 {% endif %}
 <form method="post" id="nn_sepa_form" name="nn_sepa_form" action="{{nnPaymentProcessUrl}}">
