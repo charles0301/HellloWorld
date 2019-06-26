@@ -1,4 +1,8 @@
 <script src="{{ plugin_path('Novalnet') }}/js/novalnet_sepa.js"></script>
+{% set display_field = 'none' %}
+{% if saveddetails is empty %}
+{% set display_field = 'block' %}
+{% endif %}
 <form method="post" id="nn_sepa_form" name="nn_sepa_form" action="{{nnPaymentProcessUrl}}">
 	<input type="hidden" id="paymentKey" name="paymentKey" value="{{paymentMopKey}}" />
 	<input type='hidden' id='nn_sepa_valid_dob_msg' id="nn_sepa_valid_dob_msg" value=value="{{trans("Novalnet::PaymentMethod.doberror")}}">
@@ -33,7 +37,7 @@
             <input type="hidden" id="nn_account_display_text_new" value="">
 			    
 			
-	<div id="nn_saved_details" class="row">
+	<div id="nn_saved_details" class="row" style="display:{{display_field}};">
 		<div class="col-sm-6">
 			<p>{{trans("Novalnet::PaymentMethod.sepa_account_holder_label")}}</p>	
 		</div>
@@ -47,7 +51,7 @@
 			<p>{{iban}}</p>
 		</div>
 	</div>
-	<div id="nn_new_card_details" class="input-unit" style="display:none;">		
+	<div id="nn_new_card_details" class="input-unit" style="display:{{display_field}};">		
 		<div>
 			<input type="text" name="nn_sepa_cardholder" value="{{endcustomername}}" id="nn_sepa_cardholder"> 
 			<label for="sepa_holder">{{trans("Novalnet::PaymentMethod.sepa_account_holder_label")}}*</label>
