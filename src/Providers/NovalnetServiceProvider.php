@@ -219,7 +219,7 @@ class NovalnetServiceProvider extends ServiceProvider
 			    $account = pluginApp(AccountService::class);
         		    $customerId = $account->getAccountContactId();
 			    if (!empty ($customerId)) {
-			    $log = $transactionLogData->getTransactionData('customerId', $customerId);
+			    //~ $log = $transactionLogData->getTransactionData('customerId', $customerId);
 				    $this->getLogger(__METHOD__)->error('log', $log);
 			    }
 			    			foreach ($address->options as $option) {
