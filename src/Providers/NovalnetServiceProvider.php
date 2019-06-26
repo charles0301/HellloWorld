@@ -282,7 +282,7 @@ class NovalnetServiceProvider extends ServiceProvider
                                                                     'nnPaymentProcessUrl' => $paymentProcessUrl,
                                                                     'paymentMopKey'     =>  $paymentKey,
 									'paymentName' => $paymentName,	
-									'iban' => $log[0]->additionalInfo,
+									//~ 'iban' => $log[0]->additionalInfo,
 									'saveddetails' => '1',
 								 'oneclick' => $one_click,
 								'endcustomername'=> empty(trim($endUserName)) ? $endCustomerName : $endUserName,
