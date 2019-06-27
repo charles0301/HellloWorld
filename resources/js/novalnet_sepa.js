@@ -27,6 +27,7 @@ jQuery(document).ready( function() {
 	
 	function savePaymentData()
 	{
+		alert('1');
 	jQuery('#save_payment').val('1');
 	}
 
