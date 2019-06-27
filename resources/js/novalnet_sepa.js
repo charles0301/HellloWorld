@@ -42,12 +42,12 @@ jQuery(document).ready( function() {
 			document.getElementById('nn_new_card_details').style.display='block';
 			document.getElementById('nn_saved_details').style.display='none';
 			$('#nn_sepa_new_details').val('1');
-			$('#nn_toggle_form').html('<b><u> ' + 'Old Card Details' + '</u></b>');
+			$('#nn_toggle_form').html('<b color: #008ebd;><u> ' + 'Old Card Details' + '</u></b>');
 		}else{
 			document.getElementById('nn_new_card_details').style.display='none';
 			document.getElementById('nn_saved_details').style.display='block';
 			$('#nn_sepa_new_details').val('0');
-			$('#nn_toggle_form').html('<b><u> ' + 'New Card Details' + '</u></b>');
+			$('#nn_toggle_form').html('<b color: #008ebd;><u> ' + 'New Card Details' + '</u></b>');
 		}
 			
 	});
