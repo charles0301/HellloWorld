@@ -38,7 +38,7 @@ jQuery(document).ready( function() {
 	
 	$('#nn_toggle_form').on('click',function(){
 		alert($('#nn_new_card_details').css('display'));
-		$('#nn_new_card_details').css('display') == 'none'){
+		if ($('#nn_new_card_details').css('display') == 'none'){
 			document.getElementById('nn_new_card_details').style.display='block';
 			document.getElementById('nn_saved_details').style.display='none';
 			$('#nn_sepa_new_details').val('1');
