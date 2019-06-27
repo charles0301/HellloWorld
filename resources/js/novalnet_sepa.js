@@ -27,7 +27,6 @@ jQuery(document).ready( function() {
 	
 	function savePaymentData()
 	{
-		alert('1');
 	jQuery('#save_payment').val('1');
 	}
 
@@ -37,7 +36,6 @@ jQuery(document).ready( function() {
 	}
 	
 	$('#nn_toggle_form').on('click',function(){
-		alert($('#nn_new_card_details').css('display'));
 		if ($('#nn_new_card_details').css('display') == 'none'){
 			document.getElementById('nn_new_card_details').style.display='block';
 			document.getElementById('save_payment').style.display='block';
