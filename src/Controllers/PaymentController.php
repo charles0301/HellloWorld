@@ -168,7 +168,7 @@ class PaymentController extends Controller
 		else if( in_array( $requestData['paymentKey'], $guarantee_payments )) 
 		{	
 			// Mandatory Params For Novalnet SEPA
-			if ( $requestData['paymentKey'] == 'NOVALNET_SEPA' && (!$requestData['one_click_shopping'] || !$requestData['save_payment'])) {
+			if ( $requestData['paymentKey'] == 'NOVALNET_SEPA' && !empty($requestData['nn_sepa_new_details'])) {
 					$serverRequestData['data']['bank_account_holder'] = $requestData['nn_sepa_cardholder'];
 					$serverRequestData['data']['iban'] = $requestData['nn_sepa_iban'];					
 			}            
