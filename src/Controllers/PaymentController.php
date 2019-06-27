@@ -219,7 +219,7 @@ class PaymentController extends Controller
 				}
 			}
 		}
-		
+		$this->getLogger(__METHOD__)->error('request', $serverRequestData['data']);
 		$response = $this->paymentHelper->executeCurl($serverRequestData['data'], $serverRequestData['url']);
 		
 		$responseData = $this->paymentHelper->convertStringToArray($response['response'], '&');
