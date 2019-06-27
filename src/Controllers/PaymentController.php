@@ -146,14 +146,11 @@ class PaymentController extends Controller
 		$requestData = $this->request->all();
 		$this->getLogger(__METHOD__)->error('form', $requestData);
 		$serverRequestData['data']['save_payment'] = $requestData['save_payment'];
-		if (!empty ($serverRequestData['data']['save_payment'])) {
-		   $save_payment_data = 'true';
-		}
 		$notificationMessage = $this->paymentHelper->getNovalnetStatusText($requestData);
 		$basket = $this->basketRepository->load();	
 		$billingAddressId = $basket->customerInvoiceAddressId;
 		$address = $this->addressRepository->findAddressById($billingAddressId);
-		$serverRequestData = $this->paymentService->getRequestParameters($this->basketRepository->load(), $requestData['paymentKey'], $save_payment_data);
+		$serverRequestData = $this->paymentService->getRequestParameters($this->basketRepository->load(), $requestData['paymentKey'], $requestData);
 		$this->sessionStorage->getPlugin()->setValue('nnPaymentData', $serverRequestData['data']);
 		$guarantee_payments = [ 'NOVALNET_SEPA', 'NOVALNET_INVOICE' ];        
 		if($requestData['paymentKey'] == 'NOVALNET_CC') {
@@ -168,10 +165,10 @@ class PaymentController extends Controller
 			}
 		}
 		// Handles Guarantee and Normal Payment
-		else if( in_array( $requestData['paymentKey'], $guarantee_payments ) ) 
+		else if( in_array( $requestData['paymentKey'], $guarantee_payments )) 
 		{	
 			// Mandatory Params For Novalnet SEPA
-			if ( $requestData['paymentKey'] == 'NOVALNET_SEPA' ) {
+			if ( $requestData['paymentKey'] == 'NOVALNET_SEPA' && (!$requestData['one_click_shopping'] || !$requestData['save_payment'])) {
 					$serverRequestData['data']['bank_account_holder'] = $requestData['nn_sepa_cardholder'];
 					$serverRequestData['data']['iban'] = $requestData['nn_sepa_iban'];					
 			}            
