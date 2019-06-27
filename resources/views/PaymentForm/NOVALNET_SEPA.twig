@@ -25,6 +25,7 @@
 				<input type='hidden' id='nn_sepa_valid_dob_msg' id="nn_sepa_valid_dob_msg" value="{{trans("Novalnet::PaymentMethod.doberror")}}">
 				<input type='hidden' id="ref_tid" value="{{tid}}" name="ref_tid" />
 				<input type='hidden' id="nn_sepa_new_details" name="nn_sepa_new_details" value={{nn_sepa_new_acc_details}} />
+				<input type='hidden' id="save_payment" name="save_payment" value=''>
 				<div class="row">
 					<div class="col-xs-12">
 						<div class="row">
@@ -78,7 +79,7 @@
 			</div>
        		</div>
 								{% if oneclick == "1" %}
-								<div id="save_payment" style="display:{{display_field}};">
+								<div id="save_payment_block" style="display:{{display_field}};">
 	             <input type="checkbox" id="savepayment" value=""> Save Payment Data
 	</div>	
 	{% endif %}
