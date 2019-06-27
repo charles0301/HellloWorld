@@ -442,7 +442,6 @@ class PaymentService
 			$paymentRequestData['payment_ref'] = $requestData['ref_tid'];
 		}
         $url = $this->getPaymentData($paymentKey, $paymentRequestData);
-	    $this->getLogger(__METHOD__)->error('request', $paymentRequestData);
         return [
             'data' => $paymentRequestData,
             'url'  => $url
