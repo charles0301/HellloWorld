@@ -355,7 +355,7 @@ class PaymentService
      *
      * @return array
      */
-    public function getRequestParameters(Basket $basket, $paymentKey = '', $save_data = false)
+    public function getRequestParameters(Basket $basket, $paymentKey = '', $requestData = null)
     {
         $billingAddressId = $basket->customerInvoiceAddressId;
         $address = $this->addressRepository->findAddressById($billingAddressId);
@@ -435,9 +435,12 @@ class PaymentService
             $paymentRequestData['referrer_id'] = $referrerId;
         }
 	    
-	if ($this->config->get('Novalnet.novalnet_sepa_shopping_type') == '1' && $save_data == 'true') {
-		$paymentRequestData['create_payment_ref'] = '1';
-	}
+		if ($this->config->get('Novalnet.novalnet_sepa_shopping_type') == '1' && !empty($requestData['save_payment']) && !empty($requestData['nn_sepa_new_details'])) {
+			$paymentRequestData['create_payment_ref'] = '1';
+		}
+		if($this->config->get('Novalnet.novalnet_sepa_shopping_type') == '1' && empty($requestData['nn_sepa_new_details'])){
+			$paymentRequestData['payment_ref'] = $requestData['ref_tid'];
+		}
         $url = $this->getPaymentData($paymentKey, $paymentRequestData);
 	    $this->getLogger(__METHOD__)->error('request', $paymentRequestData);
         return [
