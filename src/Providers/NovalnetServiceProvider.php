@@ -224,10 +224,9 @@ class NovalnetServiceProvider extends ServiceProvider
         		    $customerId = $account->getAccountContactId();
 			   
 			    if (!empty ($customerId) && !empty($config->get('Novalnet.novalnet_sepa_shopping_type')) ) {
-			    //~ $saved_details = $dataBase->query(TransactionLog::class)->where('paymentName', '=', strtolower($paymentKey))->where('oneClickShopping', '=', '1')->get();		
-			    //~ $tid = end($saved_details)->tid;
-			    //~ $nn_saved_detils = end($saved_details)->additionalInfo;  
-				$nn_saved_detils = 1;
+			     $saved_details = $dataBase->query(TransactionLog::class)->where('paymentName', '=', strtolower($paymentKey))->where('oneClickShopping', '=', '1')->get();		
+			     $tid = end($saved_details)->tid;
+			     $nn_saved_detils = end($saved_details)->additionalInfo;  
 			    }
 			    			foreach ($address->options as $option) {
 							if ($option->typeId == 12) {
