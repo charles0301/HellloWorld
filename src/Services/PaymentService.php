@@ -135,7 +135,7 @@ class PaymentService
     public function validateResponse()
     {
         $nnPaymentData = $this->sessionStorage->getPlugin()->getValue('nnPaymentData');
-  $this->getLogger(__METHOD__)->error('response', $nnPaymentData);
+  	$this->getLogger(__METHOD__)->error('response', $nnPaymentData);
         $this->sessionStorage->getPlugin()->setValue('nnPaymentData', null);
         
         $nnPaymentData['order_no']       = $this->sessionStorage->getPlugin()->getValue('nnOrderNo');
@@ -143,6 +143,14 @@ class PaymentService
         $nnPaymentData['payment_method'] = strtolower($this->paymentHelper->getPaymentKeyByMop($nnPaymentData['mop']));
         $this->executePayment($nnPaymentData);
 	
+	     $additionalInfo = [ 'iban' => $nnPaymentData['iban'],
+			     'account_holder' => $nnPaymentData['bank_account_holder'],
+ 			     'card_holder' => $nnPaymentData['cc_holder'],
+              	             'card_number' => $nnPaymentData['cc_no'],
+ 			     'card_expiry_date' => $nnPaymentData['cc_exp_month'] . $nnPaymentData['cc_exp_year'] ,
+ 		             'paypal_reference_tid' => $nnPaymentData['paypal_transaction_id']
+		 ];
+	 
 	
         $transactionData = [
             'amount'           => $nnPaymentData['amount'] * 100,
@@ -151,19 +159,18 @@ class PaymentService
             'ref_tid'          => $nnPaymentData['tid'],
             'payment_name'     => $nnPaymentData['payment_method'],
             'order_no'         => $nnPaymentData['order_no'],
-	    'additional_info'  => $nnPaymentData['iban'],
-	    'customer_id'	=> $nnPaymentData['customer_no']
-        ];
-	    
+	   'additional_info'   => (!empty ($nnPaymentData['create_payment_ref'])) ? json_encode ($additionalInfo) : '0',
+           'customer_id'    	=> (!empty ($nnPaymentData['create_payment_ref'])) ? $nnPaymentData['customer_no'] : '0',
+	   'one_click_shopping' => (!empty ($nnPaymentData['create_payment_ref'])) ? '1' : '0'
+				   ];
+	
 	    
 	if(in_array($nnPaymentData['payment_id'], ['27', '59']) || (in_array($nnPaymentData['tid_status'], ['85','86','90'])))
             $transactionData['callback_amount'] = 0;	
-	    
-	  //  $savecard = ['additional_info'  => $additional, 'tid' => $nnPaymentData['tid'] ];
+	   
 		  
 	    
         $this->transactionLogData->saveTransaction($transactionData);
-	    // $this->transactionLogData->saveCard($savecard);
 	   $log =  $this->transactionLogData->getTransactionData('tid', $nnPaymentData['tid']);
 	$this->getLogger(__METHOD__)->error('data1', $log);
         
@@ -355,7 +362,7 @@ class PaymentService
      *
      * @return array
      */
-    public function getRequestParameters(Basket $basket, $paymentKey = '', $requestData = null)
+    public function getRequestParameters(Basket $basket, $paymentKey = '', $save_data = false)
     {
         $billingAddressId = $basket->customerInvoiceAddressId;
         $address = $this->addressRepository->findAddressById($billingAddressId);
@@ -435,13 +442,12 @@ class PaymentService
             $paymentRequestData['referrer_id'] = $referrerId;
         }
 	    
-		if ($this->config->get('Novalnet.novalnet_sepa_shopping_type') == '1' && !empty($requestData['save_payment']) && !empty($requestData['nn_sepa_new_details'])) {
-			$paymentRequestData['create_payment_ref'] = '1';
-		}
-		if($this->config->get('Novalnet.novalnet_sepa_shopping_type') == '1' && empty($requestData['nn_sepa_new_details'])){
-			$paymentRequestData['payment_ref'] = $requestData['ref_tid'];
-		}
+	if ( ! empty ($this->config->get('Novalnet.novalnet_sepa_shopping_type') ) && $save_data == 'true') {
+		$paymentRequestData['create_payment_ref'] = '1';
+	}
+	    
         $url = $this->getPaymentData($paymentKey, $paymentRequestData);
+	    $this->getLogger(__METHOD__)->error('request', $paymentRequestData);
         return [
             'data' => $paymentRequestData,
             'url'  => $url

@@ -371,12 +371,24 @@
                }
             },
             "novalnet_sepa_shopping_type":{  
-               "type":"inputText",
+               "type":"selectBox",
                "required":false,
                "label":"Config.shoppingType",
-               "options":{  
-                  "defaultValue":""
-               }
+               "options": {
+                       "tooltip": "Config.shoppingType",
+                       "defaultValue": "0",
+                       "selectBoxValues": [
+                          {
+                             "value": "0",
+                             "caption": "Config.No"
+                          },
+                          {
+                             "value": "1",
+                             "caption": "Config.Oneclick"
+                          }
+                          
+                       ]
+                    }
             },
             "novalnet_sepa_payment_guarantee_active":{  
                "type":"checkBox",

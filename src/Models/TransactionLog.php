@@ -40,6 +40,7 @@ class TransactionLog extends Model
     public $paymentName;
     public $additionalInfo;
     public $customerId;
+    public $oneClickShopping;
     
     /**
      * Returns table name to create during build

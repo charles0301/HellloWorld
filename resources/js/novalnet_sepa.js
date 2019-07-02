@@ -36,13 +36,16 @@ jQuery(document).ready( function() {
 	}
 	
 	$('#nn_toggle_form').on('click',function(){
+		console.log($('#nn_sepa_new_details').val());
 		if ($('#nn_new_card_details').css('display') == 'none'){
+			console.log('if'+$('#nn_sepa_new_details').val());
 			document.getElementById('nn_new_card_details').style.display='block';
 			document.getElementById('save_payment_block').style.display='block';
 			document.getElementById('nn_saved_details').style.display='none';
 			$('#nn_sepa_new_details').val('1');
 			$('#nn_toggle_form').html('<b color: #008ebd;><u> ' + 'Old Card Details' + '</u></b>');
 		}else{
+			console.log('else'+$('#nn_sepa_new_details').val());
 			document.getElementById('nn_new_card_details').style.display='none';
 			document.getElementById('save_payment_block').style.display='none';
 			document.getElementById('nn_saved_details').style.display='block';
@@ -52,5 +55,9 @@ jQuery(document).ready( function() {
 			
 	});
 	
-  
+	
+	
+	
+	
+	
 });

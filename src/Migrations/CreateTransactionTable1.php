@@ -16,7 +16,6 @@ namespace Novalnet\Migrations;
 
 use Novalnet\Models\TransactionLog;
 use Plenty\Modules\Plugin\DataBase\Contracts\Migrate;
-//use Novalnet\Models\Oneclick;
 
 /**
  * Class CreateTransactionTable
@@ -31,6 +30,5 @@ class CreateTransactionTable1
     public function run(Migrate $migrate)
     {
         $migrate->updateTable(TransactionLog::class);
-        //$migrate->createTable(Oneclick::class);
     }
 }

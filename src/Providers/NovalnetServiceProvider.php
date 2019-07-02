@@ -36,6 +36,9 @@ use Plenty\Plugin\ConfigRepository;
 use IO\Services\SessionStorageService;
 use IO\Constants\SessionStorageKeys;
 use Plenty\Modules\Frontend\Services\AccountService;
+use Plenty\Modules\Plugin\DataBase\Contracts\DataBase;
+use Plenty\Modules\Plugin\DataBase\Contracts\Query;
+use Novalnet\Models\TransactionLog;
 
 use Novalnet\Methods\NovalnetInvoicePaymentMethod;
 use Novalnet\Methods\NovalnetPrepaymentPaymentMethod;
@@ -93,6 +96,7 @@ class NovalnetServiceProvider extends ServiceProvider
                           FrontendSessionStorageFactoryContract $sessionStorage,
                           TransactionService $transactionLogData,
                           Twig $twig,
+			  DataBase $dataBase,
                           ConfigRepository $config,
                           EventProceduresService $eventProceduresService)
     {
@@ -203,7 +207,7 @@ class NovalnetServiceProvider extends ServiceProvider
         
         // Listen for the event that gets the payment method content
         $eventDispatcher->listen(GetPaymentMethodContent::class,
-                function(GetPaymentMethodContent $event) use($config, $paymentHelper, $addressRepository, $paymentService, $basketRepository, $transactionLogData, $paymentMethodService, $sessionStorage, $twig)
+                function(GetPaymentMethodContent $event) use($dataBase, $config, $paymentHelper, $addressRepository, $paymentService, $basketRepository, $transactionLogData, $paymentMethodService, $sessionStorage, $twig)
                 {
 		
                     if($paymentHelper->getPaymentKeyByMop($event->getMop()))
@@ -218,9 +222,11 @@ class NovalnetServiceProvider extends ServiceProvider
 						$address = $addressRepository->findAddressById($billingAddressId);
 			    $account = pluginApp(AccountService::class);
         		    $customerId = $account->getAccountContactId();
-			    if (!empty ($customerId)) {
-			     $log = $transactionLogData->getTransactionData('customerId', $customerId);
-				  $this->getLogger(__METHOD__)->error('log', $log);
+			   
+			    if (!empty ($customerId) && !empty($config->get('Novalnet.novalnet_sepa_shopping_type')) ) {
+			   $saved_details = $dataBase->query(TransactionLog::class)->where('paymentName', '=', strtolower($paymentKey))->where('oneClickShopping', '=', '1')->get();		
+			     $tid = end($saved_details)->tid;
+			     $nn_saved_detils = end($saved_details)->additionalInfo;  
 			    }
 			    			foreach ($address->options as $option) {
 							if ($option->typeId == 12) {
@@ -278,14 +284,16 @@ class NovalnetServiceProvider extends ServiceProvider
                                 {
 				
 			$one_click = $config->get('Novalnet.novalnet_sepa_shopping_type');
+		        $nn_saved_details=json_decode($nn_saved_detils);
+					$this->getLogger(__METHOD__)->error('sepa', $nn_saved_details);
 									$content = $twig->render('Novalnet::PaymentForm.NOVALNET_SEPA', [
                                                                     'nnPaymentProcessUrl' => $paymentProcessUrl,
                                                                     'paymentMopKey'     =>  $paymentKey,
-									'paymentName' => $paymentName,	
-									'iban' => $log[0]->additionalInfo,
-									'tid' => $log[0]->tid,
-								 'oneclick' => $one_click,
-								'endcustomername'=> empty(trim($endUserName)) ? $endCustomerName : $endUserName,
+								    'paymentName' => $paymentName,	
+							            'iban' => $nn_saved_details->iban,
+										'tid' => $tid,
+								    'oneclick' => $one_click,
+								    'endcustomername'=> empty(trim($endUserName)) ? $endCustomerName : $endUserName,
                                                                     'nnGuaranteeStatus' =>  empty($address->companyName) ? $guaranteeStatus : ''
                                                  ]);
                                 }

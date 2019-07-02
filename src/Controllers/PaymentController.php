@@ -146,11 +146,19 @@ class PaymentController extends Controller
 		$requestData = $this->request->all();
 		$this->getLogger(__METHOD__)->error('form', $requestData);
 		$serverRequestData['data']['save_payment'] = $requestData['save_payment'];
+		if (!empty ($serverRequestData['data']['save_payment'])) {
+		   $save_payment_data = 'true';
+		}
+		$this->getLogger(__METHOD__)->error('ref_tid', $requestData['ref_tid']);
+		if (!empty($requestData['ref_tid']) ) {
+		   $serverRequestData['data']['payment_ref'] = $requestData['ref_tid'];
+		}
 		$notificationMessage = $this->paymentHelper->getNovalnetStatusText($requestData);
 		$basket = $this->basketRepository->load();	
 		$billingAddressId = $basket->customerInvoiceAddressId;
 		$address = $this->addressRepository->findAddressById($billingAddressId);
-		$serverRequestData = $this->paymentService->getRequestParameters($this->basketRepository->load(), $requestData['paymentKey'], $requestData);
+		$serverRequestData = $this->paymentService->getRequestParameters($this->basketRepository->load(), $requestData['paymentKey'], $save_payment_data);
+		$this->getLogger(__METHOD__)->error('ref', $serverRequestData);
 		$this->sessionStorage->getPlugin()->setValue('nnPaymentData', $serverRequestData['data']);
 		$guarantee_payments = [ 'NOVALNET_SEPA', 'NOVALNET_INVOICE' ];        
 		if($requestData['paymentKey'] == 'NOVALNET_CC') {
@@ -165,12 +173,12 @@ class PaymentController extends Controller
 			}
 		}
 		// Handles Guarantee and Normal Payment
-		else if( in_array( $requestData['paymentKey'], $guarantee_payments )) 
+		else if( in_array( $requestData['paymentKey'], $guarantee_payments ) ) 
 		{	
 			// Mandatory Params For Novalnet SEPA
-			if ( $requestData['paymentKey'] == 'NOVALNET_SEPA' && !empty($requestData['nn_sepa_new_details'])) {
+			if ( $requestData['paymentKey'] == 'NOVALNET_SEPA' && empty ($serverRequestData['data']['payment_ref'])) {
 					$serverRequestData['data']['bank_account_holder'] = $requestData['nn_sepa_cardholder'];
-					$serverRequestData['data']['iban'] = $requestData['nn_sepa_iban'];					
+					$serverRequestData['data']['iban'] =  $requestData['nn_sepa_iban'];					
 			}            
 			
 			$guranteeStatus = $this->paymentService->getGuaranteeStatus($this->basketRepository->load(), $requestData['paymentKey']);                        
@@ -219,7 +227,7 @@ class PaymentController extends Controller
 				}
 			}
 		}
-		$this->getLogger(__METHOD__)->error('request', $serverRequestData['data']);
+		
 		$response = $this->paymentHelper->executeCurl($serverRequestData['data'], $serverRequestData['url']);
 		
 		$responseData = $this->paymentHelper->convertStringToArray($response['response'], '&');

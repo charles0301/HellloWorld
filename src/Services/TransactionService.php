@@ -17,7 +17,6 @@ namespace Novalnet\Services;
 use Plenty\Modules\Plugin\DataBase\Contracts\DataBase;
 use Plenty\Modules\Plugin\DataBase\Contracts\Query;
 use Novalnet\Models\TransactionLog;
-//use Novalnet\Models\Oneclick;
 use Plenty\Plugin\Log\Loggable;
 
 /**
@@ -47,7 +46,8 @@ class TransactionService
             $transaction->tid                 = $transactionData['tid'];
             $transaction->paymentName         = $transactionData['payment_name'];
             $transaction->additionalInfo      = $transactionData['additional_info'];
-            $transaction->customerId      = $transactionData['customer_id'];
+            $transaction->customerId          = $transactionData['customer_id'];
+            $transaction->oneClickShopping    = $transactionData['one_click_shopping'];
             
             $database->save($transaction);
         } catch (\Exception $e) {
@@ -55,24 +55,6 @@ class TransactionService
         }
     }
     
-    /**
-     * Save data in transaction table
-     *
-     * @param $transactionData
-     */
-   // public function saveCard($transactionData)
-   // {
-      //  try {
-        //    $database = pluginApp(DataBase::class);
-        //    $oneclick = pluginApp(Oneclick::class);
-         //   $oneclick->tid                 = $transactionData['tid'];
-         //   $oneclick->additionalInfo      = $transactionData['additional_info'];
-
-          //  $database->save($oneclick);
-     //   } catch (\Exception $e) {
-      //      $this->getLogger(__METHOD__)->error('Callback table insert failed!.', $e);
-      //  }
-    //}
     
 
     /**
@@ -87,7 +69,7 @@ class TransactionService
     {
         $database = pluginApp(DataBase::class);
         $order    = $database->query(TransactionLog::class)->where($key, '=', $value)->get();
-        // $order    = $database->query(Oneclick::class)->where($key, '=', $value)->get();
         return $order;
     }
+   
 }
