@@ -15,15 +15,43 @@
 	</div>
 	<div class="modal-body form-horizontal">
 		<div class="row">
-		   <div class="col-xs-12">
+		   <div class="col-xs-12 col-sm-12">
 		     <h5>
 			<a id="nn_toggle_form" style="cursor:pointer;color: #008ebd;"><b><u>New Account Details</u></b></a>
 		     </h5>
 		   </div>
 		 </div>
 		<div class="row">
+		  <div class="col-xs-12 col-sm-12">
 			<iframe id="nn_iframe" src="{{nnCcFormUrl}}" frameborder="0" onload="initIframe()" scrolling="no" width="100%"></iframe>
+		  </div>
 		</div> 
+		<div id="nn_saved_details" class="row" style="display:none;">
+		  <div class="col-xs-12 col-sm-12">
+		  	<div class="input-unit">
+				<input type="text"  value=""   readonly=true> 
+					<label for="cc_card_type">{{trans("Novalnet::PaymentMethod.cc_card_type")}}*</label>
+		   	</div>
+		 </div>
+		 <div class="col-xs-12 col-sm-12">
+		  	<div class="input-unit">
+				<input type="text"  value=""   readonly=true> 
+					<label for="cc_account_holder">{{trans("Novalnet::PaymentMethod.cc_card_account_holder")}}*</label>
+		   	</div>
+		 </div>
+		 <div class="col-xs-12 col-sm-12">
+		  	<div class="input-unit">
+				<input type="text"  value=""   readonly=true> 
+					<label for="cc_card_no">{{trans("Novalnet::PaymentMethod.cc_card_number")}}*</label>
+		   	</div>
+		 </div>
+		 <div class="col-xs-12 col-sm-12">
+		  	<div class="input-unit">
+				<input type="text"  value=""   readonly=true> 
+					<label for="cc_card_expiry_date">{{trans("Novalnet::PaymentMethod.cc_card_expiry_date")}}*</label>
+		   	</div>
+		 </div>
+              </div>
 	</div>
 	<div class="modal-footer">
 		<button type="submit" class="btn btn-primary" id="novalnet_form_btn" onclick="getHash(event)">
