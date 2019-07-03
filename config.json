@@ -230,6 +230,26 @@
                   "defaultValue":"7.1"
                }
             },
+            "novalnet_cc_shopping_type":{  
+               "type":"selectBox",
+               "required":false,
+               "label":"Config.shoppingType",
+               "options": {
+                       "tooltip": "Config.shoppingType",
+                       "defaultValue": "0",
+                       "selectBoxValues": [
+                          {
+                             "value": "0",
+                             "caption": "Config.No"
+                          },
+                          {
+                             "value": "1",
+                             "caption": "Config.Oneclick"
+                          }
+                          
+                       ]
+                    }
+            },
             "novalnet_cc_standard_style_label":{  
                "type":"inputText",
                "required":false,
