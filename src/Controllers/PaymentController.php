@@ -150,14 +150,14 @@ class PaymentController extends Controller
 		   $save_payment_data = 'true';
 		}
 		$this->getLogger(__METHOD__)->error('ref_tid', $requestData['ref_tid']);
-		if (!empty($requestData['ref_tid']) ) {
-		   $serverRequestData['data']['payment_ref'] = $requestData['ref_tid'];
-		}
 		$notificationMessage = $this->paymentHelper->getNovalnetStatusText($requestData);
 		$basket = $this->basketRepository->load();	
 		$billingAddressId = $basket->customerInvoiceAddressId;
 		$address = $this->addressRepository->findAddressById($billingAddressId);
 		$serverRequestData = $this->paymentService->getRequestParameters($this->basketRepository->load(), $requestData['paymentKey'], $save_payment_data);
+		if (!empty($requestData['ref_tid']) ) {
+		   $serverRequestData['data']['payment_ref'] = $requestData['ref_tid'];
+		}
 		$this->getLogger(__METHOD__)->error('ref', $serverRequestData);
 		$this->sessionStorage->getPlugin()->setValue('nnPaymentData', $serverRequestData['data']);
 		$guarantee_payments = [ 'NOVALNET_SEPA', 'NOVALNET_INVOICE' ];        
